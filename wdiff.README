@@ -1,0 +1,88 @@
+ wdiff
+------------------------------------------
+
+Compare two files word by word
+
+Find word deleted or added from the first file to make the second. A
+word is defined as anything between whitespace. It works by creating
+two temporary files, one word per line, and the executes 'diff' on
+these fields. It collects the 'diff' output and uses it to produce a
+nicer display of word differences between the original files.
+
+Runtime requirements:
+  cygwin
+
+Build requirements:
+  cygwin
+
+Canonical homepage:
+  http://directory.fsf.org/all/wdiff.html
+  http://sourceforge.net/projects/wdiff (CVS is there, no release files)
+  http://packages.debian.org/wdiff
+
+Canonical download:
+  http://ftp.gnu.org/gnu/wdiff/
+
+Version control repository: 
+  https://savannah.gnu.org/cvs/?group=wdiff
+
+Mailing list:
+
+IRC channel:
+
+Upstream contact:
+  Author: Denver Gingerich <denver@ossguy.com>
+  Bugs: <wdiff-bugs@gnu.org>
+
+License:
+  GPL
+
+Language:
+  C
+
+------------------------------------
+
+Build instructions:
+  You may need cygbuild.sourceforge.net to build *src.tar.bz2 archive
+  unpack wdiff-0.5-1-src.tar.bz2
+    if you use setup to install this src package, it will be
+    unpacked under /usr/src automatically
+  cd /usr/src
+  ./wdiff*.sh all
+
+This will create:
+  wdiff-0.5-1.tar.bz2
+  wdiff-0.5-1-src.tar.bz2
+
+-------------------------------------------
+
+Files included in the binary distro:
+
+usr/bin/wdiff.exe
+usr/share/doc/Cygwin/wdiff-0.5.README
+usr/share/doc/wdiff-0.5/BACKLOG
+usr/share/doc/wdiff-0.5/COPYING
+usr/share/doc/wdiff-0.5/ChangeLog
+usr/share/doc/wdiff-0.5/INSTALL
+usr/share/doc/wdiff-0.5/NEWS
+usr/share/doc/wdiff-0.5/README
+usr/share/doc/wdiff-0.5/TAGS
+usr/share/doc/wdiff-0.5/THANKS
+usr/share/doc/wdiff-0.5/TODO
+usr/share/info/wdiff.info
+usr/share/man/man1/wdiff.1.gz
+
+------------------
+
+Port Notes:
+
+- This port is based on GNU site.
+
+----- version 0.5-1 -----
+- Initial release, 2007-08-22 Jari Aalto
+- Note that 0.5 was released 1994-11-06
+- From Debian page, downloaded wdiff_0.5-17.diff.gz, removed debian/
+  dir and included it into packaging.
+
+Cygwin port maintained by: Jari Aalto <jari dt aalto A T cante dt net>
+

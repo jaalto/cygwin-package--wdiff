@@ -1,0 +1,8 @@
+sdesc: "Compare two files word by word"
+ldesc: "Find word deleted or added from the first file to make the second. A
+word is defined as anything between whitespace. It works by creating
+two temporary files, one word per line, and the executes 'diff' on
+these fields. It collects the 'diff' output and uses it to produce a
+nicer display of word differences between the original files."
+category: Utils
+requires: cygwin
