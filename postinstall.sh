@@ -82,3 +82,11 @@ Main()
 Main "$@"
 
 # End of file
+#:info
+(
+    cd /usr/share/info &&
+    for i in  wdiff.info
+    do
+	install-info --dir-file=./dir --info-file=$i
+    done
+)
