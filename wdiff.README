@@ -10,14 +10,10 @@ these fields. It collects the 'diff' output and uses it to produce a
 nicer display of word differences between the original files.
 
 Runtime requirements:
-  cygwin
-  libgcc1
   libintl8
   libncursesw10
 
 Build requirements:
-  cygwin
-  gcc4
   libncursesw-devel
 
 Canonical homepage:
