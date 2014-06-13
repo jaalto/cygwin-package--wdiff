@@ -1,0 +1,167 @@
+From: Santiago Vila <sanvila@debian.org>
+Subject: Updated config.guess and config.sub
+X-Debian-version: 1.2.2-1
+
+--- a/build-aux/config.guess
++++ b/build-aux/config.guess
+@@ -2,7 +2,7 @@
+ # Attempt to guess a canonical system name.
+ #   Copyright 1992-2014 Free Software Foundation, Inc.
+ 
+-timestamp='2014-02-12'
++timestamp='2014-03-23'
+ 
+ # This file is free software; you can redistribute it and/or modify it
+ # under the terms of the GNU General Public License as published by
+@@ -826,7 +826,7 @@
+     *:MINGW*:*)
+ 	echo ${UNAME_MACHINE}-pc-mingw32
+ 	exit ;;
+-    i*:MSYS*:*)
++    *:MSYS*:*)
+ 	echo ${UNAME_MACHINE}-pc-msys
+ 	exit ;;
+     i*:windows32*:*)
+@@ -969,10 +969,10 @@
+ 	eval `$CC_FOR_BUILD -E $dummy.c 2>/dev/null | grep '^CPU'`
+ 	test x"${CPU}" != x && { echo "${CPU}-unknown-linux-${LIBC}"; exit; }
+ 	;;
+-    or1k:Linux:*:*)
+-	echo ${UNAME_MACHINE}-unknown-linux-${LIBC}
++    openrisc*:Linux:*:*)
++	echo or1k-unknown-linux-${LIBC}
+ 	exit ;;
+-    or32:Linux:*:*)
++    or32:Linux:*:* | or1k*:Linux:*:*)
+ 	echo ${UNAME_MACHINE}-unknown-linux-${LIBC}
+ 	exit ;;
+     padre:Linux:*:*)
+@@ -1020,18 +1020,7 @@
+ 	echo ${UNAME_MACHINE}-dec-linux-${LIBC}
+ 	exit ;;
+     x86_64:Linux:*:*)
+-	eval $set_cc_for_build
+-	X86_64_ABI=
+-	# If there is a compiler, see if it is configured for 32-bit objects.
+-	if [ "$CC_FOR_BUILD" != 'no_compiler_found' ]; then
+-	    if (echo '#ifdef __ILP32__'; echo IS_X32; echo '#endif') | \
+-		(CCOPTS= $CC_FOR_BUILD -E - 2>/dev/null) | \
+-		grep IS_X32 >/dev/null
+-	    then
+-		X86_64_ABI=x32
+-	    fi
+-	fi
+-	echo x86_64-unknown-linux-gnu${X86_64_ABI}
++	echo ${UNAME_MACHINE}-unknown-linux-${LIBC}
+ 	exit ;;
+     xtensa*:Linux:*:*)
+ 	echo ${UNAME_MACHINE}-unknown-linux-${LIBC}
+--- a/build-aux/config.sub
++++ b/build-aux/config.sub
+@@ -2,7 +2,7 @@
+ # Configuration validation subroutine script.
+ #   Copyright 1992-2014 Free Software Foundation, Inc.
+ 
+-timestamp='2014-01-01'
++timestamp='2014-05-01'
+ 
+ # This file is free software; you can redistribute it and/or modify it
+ # under the terms of the GNU General Public License as published by
+@@ -258,7 +258,7 @@
+ 	| be32 | be64 \
+ 	| bfin \
+ 	| c4x | c8051 | clipper \
+-	| d10v | d30v | dlx | dsp16xx | dvp \
++	| d10v | d30v | dlx | dsp16xx \
+ 	| epiphany \
+ 	| fido | fr30 | frv \
+ 	| h8300 | h8500 | hppa | hppa1.[01] | hppa2.0 | hppa2.0[nw] | hppa64 \
+@@ -283,8 +283,10 @@
+ 	| mips64vr5900 | mips64vr5900el \
+ 	| mipsisa32 | mipsisa32el \
+ 	| mipsisa32r2 | mipsisa32r2el \
++	| mipsisa32r6 | mipsisa32r6el \
+ 	| mipsisa64 | mipsisa64el \
+ 	| mipsisa64r2 | mipsisa64r2el \
++	| mipsisa64r6 | mipsisa64r6el \
+ 	| mipsisa64sb1 | mipsisa64sb1el \
+ 	| mipsisa64sr71k | mipsisa64sr71kel \
+ 	| mipsr5900 | mipsr5900el \
+@@ -296,8 +298,7 @@
+ 	| nds32 | nds32le | nds32be \
+ 	| nios | nios2 | nios2eb | nios2el \
+ 	| ns16k | ns32k \
+-	| open8 \
+-	| or1k | or32 \
++	| open8 | or1k | or1knd | or32 \
+ 	| pdp10 | pdp11 | pj | pjl \
+ 	| powerpc | powerpc64 | powerpc64le | powerpcle \
+ 	| pyramid \
+@@ -402,8 +403,10 @@
+ 	| mips64vr5900-* | mips64vr5900el-* \
+ 	| mipsisa32-* | mipsisa32el-* \
+ 	| mipsisa32r2-* | mipsisa32r2el-* \
++	| mipsisa32r6-* | mipsisa32r6el-* \
+ 	| mipsisa64-* | mipsisa64el-* \
+ 	| mipsisa64r2-* | mipsisa64r2el-* \
++	| mipsisa64r6-* | mipsisa64r6el-* \
+ 	| mipsisa64sb1-* | mipsisa64sb1el-* \
+ 	| mipsisa64sr71k-* | mipsisa64sr71kel-* \
+ 	| mipsr5900-* | mipsr5900el-* \
+@@ -415,6 +418,7 @@
+ 	| nios-* | nios2-* | nios2eb-* | nios2el-* \
+ 	| none-* | np1-* | ns16k-* | ns32k-* \
+ 	| open8-* \
++	| or1k*-* \
+ 	| orion-* \
+ 	| pdp10-* | pdp11-* | pj-* | pjl-* | pn-* | power-* \
+ 	| powerpc-* | powerpc64-* | powerpc64le-* | powerpcle-* \
+@@ -810,24 +814,6 @@
+ 		basic_machine=m68k-atari
+ 		os=-mint
+ 		;;
+-	mipsEE* | ee | ps2)
+-		basic_machine=mips64r5900el-scei
+-		case $os in
+-		    -linux*)
+-			;;
+-		    *)
+-			os=-elf
+-			;;
+-		esac
+-		;;
+-	iop)
+-		basic_machine=mipsel-scei
+-		os=-irx
+-		;;
+-	dvp)
+-		basic_machine=dvp-scei
+-		os=-elf
+-		;;
+ 	mips3*-*)
+ 		basic_machine=`echo $basic_machine | sed -e 's/mips3/mips64/'`
+ 		;;
+@@ -1390,11 +1376,11 @@
+ 	      | -uxpv* | -beos* | -mpeix* | -udk* \
+ 	      | -interix* | -uwin* | -mks* | -rhapsody* | -darwin* | -opened* \
+ 	      | -openstep* | -oskit* | -conix* | -pw32* | -nonstopux* \
+-	      | -storm-chaos* | -tops10* | -tenex* | -tops20* | -its* | -irx* \
++	      | -storm-chaos* | -tops10* | -tenex* | -tops20* | -its* \
+ 	      | -os2* | -vos* | -palmos* | -uclinux* | -nucleus* \
+ 	      | -morphos* | -superux* | -rtmk* | -rtmk-nova* | -windiss* \
+ 	      | -powermax* | -dnix* | -nx6 | -nx7 | -sei* | -dragonfly* \
+-	      | -skyos* | -haiku* | -rdos* | -toppers* | -drops* | -es*)
++	      | -skyos* | -haiku* | -rdos* | -toppers* | -drops* | -es* | -tirtos*)
+ 	# Remember, each alternative MUST END IN *, to match a version number.
+ 		;;
+ 	-qnx*)
+@@ -1612,9 +1598,6 @@
+ 	mips*-*)
+ 		os=-elf
+ 		;;
+-	or1k-*)
+-		os=-elf
+-		;;
+ 	or32-*)
+ 		os=-coff
+ 		;;
